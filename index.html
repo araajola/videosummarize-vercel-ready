@@ -1,0 +1,33 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Video Summarize</title>
+<style>
+body { font-family: Arial; padding: 2rem; }
+input { width: 80%; padding: 0.5rem; margin-bottom: 1rem; }
+button { padding: 0.5rem 1rem; }
+#summary { margin-top: 1rem; white-space: pre-wrap; }
+</style>
+</head>
+<body>
+<h1>Video Summarize</h1>
+<input type="text" id="youtubeUrl" placeholder="Paste YouTube URL here" />
+<button onclick="summarize()">Summarize</button>
+<div id="summary"></div>
+<script>
+async function summarize() {
+  const url = document.getElementById('youtubeUrl').value;
+  const res = await fetch('/api/summarize', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ youtubeUrl: url })
+  });
+  const data = await res.json();
+  document.getElementById('summary').innerText = data.summary;
+}
+</script>
+</body>
+</html>
